@@ -12,8 +12,10 @@ interface Props {
   onGameOver: (score: number) => void
 }
 
+type TetrominoType = "I" | "J" | "L" | "O" | "S" | "T" | "Z"
+
 // Define tetromino shapes and colors
-const TETROMINOES = {
+const TETROMINOES: Record<TetrominoType, { shape: number[][]; color: string }> = {
   I: {
     shape: [
       [0, 0, 0, 0],
@@ -72,6 +74,7 @@ const TETROMINOES = {
   },
 }
 
+const keys = Object.keys(TETROMINOES) as TetrominoType[]
 // Game constants
 const ROWS = 20
 const COLS = 10
@@ -107,7 +110,7 @@ export default function TetrisGame({ playerName, onGameOver}: Props) {
 
   // Generate a random tetromino
   const randomTetromino = useCallback(() => {
-    const keys = Object.keys(TETROMINOES)
+    const keys = Object.keys(TETROMINOES) as TetrominoType[]
     const tetromino = keys[Math.floor(Math.random() * keys.length)]
 
     return {

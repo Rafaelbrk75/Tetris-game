@@ -8,6 +8,7 @@ export async function GET() {
     const scores = await db.collection('scores').find().sort({ score: -1 }).limit(10).toArray();
     return NextResponse.json(scores);
   } catch (error) {
+    console.error(error) // Adicione esta linha para ver o erro no terminal
     return NextResponse.json({ error: 'Erro ao buscar ranking' }, { status: 500 });
   }
 }
@@ -27,4 +28,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Erro ao salvar score' }, { status: 500 });
   }
 }
+
+// Removido bloco mongoose.connect desnecessário, pois clientPromise já gerencia a conexão.
 

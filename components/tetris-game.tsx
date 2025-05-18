@@ -15,7 +15,8 @@ interface Props {
 type TetrominoType = "I" | "J" | "L" | "O" | "S" | "T" | "Z"
 
 // Define tetromino shapes and colors
-const TETROMINOES: Record<TetrominoType, { shape: number[][]; color: string }> = {
+const TETROMINOES = {
+  
   I: {
     shape: [
       [0, 0, 0, 0],
@@ -81,11 +82,18 @@ const COLS = 10
 const INITIAL_TIME = 120 // 2 minutes
 const BLOCK_SIZE = 25
 
+type Piece = {
+  type: TetrominoType
+  shape: number[][]
+  color: string
+  position: { x: number; y: number }
+}
+
 export default function TetrisGame({ playerName, onGameOver}: Props) {
   const [gameBoard, setGameBoard] = useState(createEmptyBoard())
-  const [currentPiece, setCurrentPiece] = useState(null)
-  const [nextPiece, setNextPiece] = useState(null)
-  const [heldPiece, setHeldPiece] = useState(null)
+  const [currentPiece, setCurrentPiece] = useState<Piece | null>(null)
+  const [nextPiece, setNextPiece] = useState<Piece | null>(null)
+  const [heldPiece, setHeldPiece] = useState<Piece | null>(null)
   const [canHold, setCanHold] = useState(true)
   const [score, setScore] = useState(0)
   const [highScore, setHighScore] = useState(453)
@@ -95,13 +103,13 @@ export default function TetrisGame({ playerName, onGameOver}: Props) {
   const [gameStarted, setGameStarted] = useState(false)
   const [isMuted, setIsMuted] = useState(false)
   const [speed, setSpeed] = useState(2) // 1-5 speed scale
-  const [ghostPiece, setGhostPiece] = useState(null)
+  const [ghostPiece, setGhostPiece] = useState<Piece | null>(null)
 
-  const requestRef = useRef(null)
+  const requestRef = useRef<number | null>(null)
   const lastUpdateTimeRef = useRef(0)
   const lastFallTimeRef = useRef(0)
   const fallIntervalRef = useRef(500) // How often the piece moves down automatically
-  const gameContainerRef = useRef(null)
+  const gameContainerRef = useRef<HTMLDivElement>(null)
 
   // Create an empty game board
   function createEmptyBoard() {
@@ -151,13 +159,19 @@ export default function TetrisGame({ playerName, onGameOver}: Props) {
   }, [randomTetromino, isMuted, speed])
 
   // Check if the move is valid
-  const isValidMove = useCallback((piece, boardState, offsetX = 0, offsetY = 0) => {
-    if (!piece) return false
+  const isValidMove = useCallback(
+    (
+      piece: Piece | null,
+      boardState: (string | number)[][],
+      offsetX: number = 0,
+      offsetY: number = 0
+    ) => {
+      if (!piece) return false
 
-    return piece.shape.every((row, y) => {
-      return row.every((value, x) => {
-        const newX = piece.position.x + x + offsetX
-        const newY = piece.position.y + y + offsetY
+      return piece.shape.every((row: number[], y: number) => {
+        return row.every((value: number, x: number) => {
+          const newX = piece.position.x + x + offsetX
+          const newY = piece.position.y + y + offsetY
 
         // Check if the position is within bounds and not colliding with existing blocks
         return (
@@ -169,15 +183,23 @@ export default function TetrisGame({ playerName, onGameOver}: Props) {
   }, [])
 
   // Calculate ghost piece position
+  // Calculate and update the ghost piece position
   const updateGhostPiece = useCallback(
-    (piece, board) => {
+    (piece: Piece | null, board: (string | number)[][]) => {
       if (!piece) {
         setGhostPiece(null)
         return
       }
 
       let dropDistance = 0
-      while (isValidMove(piece, board, 0, dropDistance + 1)) {
+      // Clone the piece to avoid mutating the original
+      const testPiece = {
+        ...piece,
+        position: { ...piece.position },
+      }
+
+      // Find the maximum drop distance
+      while (isValidMove(testPiece, board, 0, dropDistance + 1)) {
         dropDistance++
       }
 
@@ -240,7 +262,7 @@ export default function TetrisGame({ playerName, onGameOver}: Props) {
 
   // Move the current piece
   const movePiece = useCallback(
-    (direction) => {
+    (direction: "left" | "right" | "down") => {
       if (!currentPiece || isPaused || gameOver) return false
 
       const offsetX = direction === "left" ? -1 : direction === "right" ? 1 : 0
@@ -356,7 +378,6 @@ export default function TetrisGame({ playerName, onGameOver}: Props) {
     if (!currentPiece || !canHold || isPaused || gameOver) return
 
     if (heldPiece) {
-      // Swap current piece with held piece
       const temp = {
         ...heldPiece,
         position: { x: Math.floor(COLS / 2) - 1, y: 0 },
@@ -365,15 +386,16 @@ export default function TetrisGame({ playerName, onGameOver}: Props) {
         type: currentPiece.type,
         shape: TETROMINOES[currentPiece.type].shape,
         color: currentPiece.color,
+        position: { x: Math.floor(COLS / 2) - 1, y: 0 },
       })
       setCurrentPiece(temp)
       updateGhostPiece(temp, gameBoard)
     } else {
-      // Hold current piece and get next piece
       setHeldPiece({
         type: currentPiece.type,
         shape: TETROMINOES[currentPiece.type].shape,
         color: currentPiece.color,
+        position: { x: Math.floor(COLS / 2) - 1, y: 0 },
       })
       const newPiece = nextPiece
       setCurrentPiece(newPiece)
@@ -397,21 +419,25 @@ export default function TetrisGame({ playerName, onGameOver}: Props) {
   ])
 
   // Check for completed rows
-  const checkCompletedRows = useCallback((board) => {
-    return board.reduce((completedRows, row, index) => {
-      if (row.every((cell) => cell !== 0)) {
-        completedRows.push(index)
-      }
-      return completedRows
-    }, [])
-  }, [])
+  const checkCompletedRows = useCallback(
+    (board: (string | number)[][]): number[] => {
+      return board.reduce((completedRows: number[], row: (string | number)[], index: number) => {
+        if (row.every((cell: string | number) => cell !== 0)) {
+          completedRows.push(index)
+        }
+        return completedRows
+      }, [])
+    },
+    []
+  )
 
   // Clear completed rows
-  const clearRows = useCallback((board, rowsToClear) => {
-    const newBoard = [...board]
+  const clearRows = useCallback(
+    (board: (string | number)[][], rowsToClear: number[]) => {
+      const newBoard = [...board]
 
-    rowsToClear.forEach((rowIndex) => {
-      // Remove the completed row
+      rowsToClear.forEach((rowIndex: number) => {
+        // Remove the completed row
       newBoard.splice(rowIndex, 1)
       // Add a new empty row at the top
       newBoard.unshift(Array(COLS).fill(0))
@@ -422,7 +448,7 @@ export default function TetrisGame({ playerName, onGameOver}: Props) {
 
   // Update the score
   const updateScore = useCallback(
-    (clearedRows) => {
+    (clearedRows: number) => {
       const points = [0, 100, 300, 500, 800][clearedRows] // Points based on number of rows cleared
       setScore((prevScore) => {
         const newScore = prevScore + points
@@ -437,7 +463,7 @@ export default function TetrisGame({ playerName, onGameOver}: Props) {
 
   // Handle keyboard input
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       // Prevent default behavior for game controls to avoid scrolling
       if (["ArrowLeft", "ArrowRight", "ArrowDown", "ArrowUp", " "].includes(e.key)) {
         e.preventDefault()
@@ -503,7 +529,7 @@ export default function TetrisGame({ playerName, onGameOver}: Props) {
 
   // Game loop
   const gameLoop = useCallback(
-    (timestamp) => {
+    (timestamp: number) => {
       if (!gameStarted || gameOver || isPaused) {
         requestRef.current = requestAnimationFrame(gameLoop)
         return
@@ -605,7 +631,7 @@ export default function TetrisGame({ playerName, onGameOver}: Props) {
   }
 
   // Render a piece preview (for next and hold)
-  const renderPiecePreview = (piece, size = 4) => {
+  const renderPiecePreview = (piece: Piece | null, size: number = 4) => {
     if (!piece)
       return (
         <div className="grid grid-cols-4 gap-[1px] bg-gray-800 p-[1px]">

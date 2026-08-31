@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rafael Bruno — QA Engineer &amp; Back-end Developer</title>
+<meta name="description" content="QA Engineer &amp; Back-end Developer · Java / Spring Boot. Automação, testes de contrato e APIs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="#top" class="logo">Rafael<br>Bruno<span class="dot">.</span></a>
+    <nav class="nav">
+      <a href="#projetos">Projetos</a>
+      <a href="#stack">Stack</a>
+      <a href="#qa">QA</a>
+      <a href="#experiencia">Experiência</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <a href="cv-rafael-bruno.pdf" class="btn btn-red" download>Baixar CV</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero wrap">
+    <div class="hero-main">
+      <p class="eyebrow">QA Engineer &amp; Back-end Developer · Java / Spring Boot</p>
+      <h1>
+        Eu quebro o software antes que o usuário quebre.<br>
+        <span class="accent">E depois eu construo.</span>
+      </h1>
+      <p class="lead">
+        Atuo nas duas pontas: desenho estratégias de teste que dão confiança pra time entregar rápido,
+        e escrevo a API que sustenta a entrega. Automação, testes de contrato e Java no back-end.
+      </p>
+      <p class="lead-en">I test it, then I build it — QA strategy and Spring Boot APIs by the same pair of hands.</p>
+      <div class="hero-actions">
+        <a href="#projetos" class="btn btn-black">Ver projetos</a>
+        <a href="#contato" class="btn btn-outline">Falar comigo</a>
+      </div>
+    </div>
+    <aside class="hero-stats">
+      <div class="stat">
+        <span class="stat-num" id="stat-repos">—</span>
+        <span class="stat-label">Repositórios públicos</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" id="stat-langs">—</span>
+        <span class="stat-label">Linguagens em uso</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num" id="stat-stars">—</span>
+        <span class="stat-label">Stars acumuladas</span>
+      </div>
+      <p class="stat-footnote">Dados ao vivo · GitHub API · <a href="https://github.com/Rafaelbrk75" target="_blank" rel="noopener">@Rafaelbrk75</a></p>
+    </aside>
+  </section>
+
+  <!-- PROJETOS -->
+  <section id="projetos" class="section wrap">
+    <div class="section-head">
+      <div>
+        <p class="kicker">01 — Projetos</p>
+        <h2>Direto do meu GitHub</h2>
+        <p class="section-sub-en">Pulled live from the GitHub API — nothing hand-maintained.</p>
+      </div>
+      <a href="https://github.com/Rafaelbrk75" target="_blank" rel="noopener" class="btn btn-outline-sm">Ver perfil completo</a>
+    </div>
+
+    <div id="lang-filters" class="filters"></div>
+    <div id="projects-grid" class="projects-grid" aria-live="polite">
+      <p class="loading-msg">Carregando repositórios…</p>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack" class="section wrap">
+    <p class="kicker">02 — Stack</p>
+    <h2>Ferramentas que eu uso todo dia</h2>
+    <p class="section-sub-en">The toolchain, split by the two halves of the job.</p>
+
+    <div class="stack-grid">
+      <div class="stack-col">
+        <h3>Qualidade &amp; Automação</h3>
+        <p class="stack-sub-en">Quality engineering</p>
+        <div class="pills">
+          <span>JUnit 5</span><span>Selenium</span><span>Cypress</span><span>Postman</span>
+          <span>REST Assured</span><span>Cucumber / BDD</span><span>Mockito</span><span>JMeter</span>
+        </div>
+      </div>
+      <div class="stack-col">
+        <h3>Back-end</h3>
+        <p class="stack-sub-en">Server side</p>
+        <div class="pills">
+          <span>Java 17</span><span>Spring Boot</span><span>Spring Data JPA</span><span>REST APIs</span>
+          <span>Maven</span><span>PostgreSQL</span><span>Docker</span><span>SQL</span>
+        </div>
+      </div>
+      <div class="stack-col">
+        <h3>Processo &amp; Infra</h3>
+        <p class="stack-sub-en">Process &amp; delivery</p>
+        <div class="pills">
+          <span>Git / GitHub</span><span>GitHub Actions</span><span>CI/CD</span>
+          <span>Jira / Xray</span><span>Scrum</span><span>Swagger</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QA -->
+  <section id="qa" class="section wrap">
+    <p class="kicker">03 — Estratégia de QA</p>
+    <h2>Como eu garanto qualidade</h2>
+    <p class="section-sub-en">A pyramid, not a pile of manual scripts.</p>
+
+    <div class="qa-layout">
+      <div class="pyramid">
+        <div class="pyr-block pyr-e2e">
+          <h4>E2E · 10%</h4>
+          <p>Fluxos críticos de negócio — Cypress / Selenium</p>
+        </div>
+        <div class="pyr-block pyr-int">
+          <h4>Integração / Contrato · 30%</h4>
+          <p>REST Assured, Testcontainers, validação de schema</p>
+        </div>
+        <div class="pyr-block pyr-unit">
+          <h4>Unitários · 60%</h4>
+          <p>JUnit 5 + Mockito, rodando em cada push</p>
+        </div>
+      </div>
+
+      <div class="tc-table-wrap">
+        <h4 class="tc-title">Amostra de casos de teste</h4>
+        <table class="tc-table">
+          <thead>
+            <tr><th>ID</th><th>Cenário</th><th>Tipo</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>TC-014</td><td>POST /foods sem nome retorna 400</td><td>API</td><td><span class="tag tag-auto">Automatizado</span></td></tr>
+            <tr><td>TC-021</td><td>GET /foods paginado mantém ordem</td><td>API</td><td><span class="tag tag-auto">Automatizado</span></td></tr>
+            <tr><td>TC-033</td><td>Validade expirada dispara alerta</td><td>Regra</td><td><span class="tag tag-auto">Automatizado</span></td></tr>
+            <tr><td>TC-047</td><td>Carga: 500 req/s por 5 min</td><td>Perf</td><td><span class="tag tag-perf">JMeter</span></td></tr>
+            <tr><td>TC-052</td><td>Fluxo completo de cadastro no front</td><td>E2E</td><td><span class="tag tag-exp">Exploratório</span></td></tr>
+          </tbody>
+        </table>
+        <p class="tc-footnote">Cada bug encontrado vira teste de regressão antes do fix — a suíte só cresce.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCIA -->
+  <section id="experiencia" class="section wrap">
+    <p class="kicker">04 — Experiência</p>
+    <h2>Trajetória</h2>
+
+    <ol class="timeline">
+      <li>
+        <span class="tl-date">2024 — hoje</span>
+        <div class="tl-body">
+          <h3>Analista de QA · Automação</h3>
+          <p>Desenho e mantenho a suíte automatizada de API e regressão, integrada ao pipeline. Reduzi o ciclo de validação de release de dias para horas e levei a cobertura crítica para o verde.</p>
+        </div>
+      </li>
+      <li>
+        <span class="tl-date">2023 — 2024</span>
+        <div class="tl-body">
+          <h3>Desenvolvedor Back-end (Java / Spring Boot)</h3>
+          <p>APIs REST em Spring Boot com JPA e PostgreSQL, documentadas em Swagger e cobertas por testes desde o primeiro commit — como no projeto Fridge.</p>
+        </div>
+      </li>
+      <li>
+        <span class="tl-date">2022 — 2023</span>
+        <div class="tl-body">
+          <h3>QA Manual → Automação</h3>
+          <p>Testes funcionais, exploratórios e documentação de casos em Jira/Xray. Transição para automação escrevendo os primeiros scripts da equipe.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="certs">
+      <div class="cert-card">
+        <p class="cert-kicker">Certificação</p>
+        <h4>CTFL — ISTQB Foundation</h4>
+        <p>Fundamentos de teste de software</p>
+      </div>
+      <div class="cert-card">
+        <p class="cert-kicker">Certificação</p>
+        <h4>Java 10x — Back-end</h4>
+        <p>Java, Spring Boot e APIs REST</p>
+      </div>
+      <div class="cert-card">
+        <p class="cert-kicker">Certificação</p>
+        <h4>Automação de Testes</h4>
+        <p>Selenium, Cypress e CI</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato" class="contact-section">
+    <div class="wrap">
+      <p class="kicker kicker-light">05 — Contato</p>
+      <h2>Precisa de alguém que testa e entrega?</h2>
+      <p class="lead-light">Estou aberto a posições de QA, QA Engineer e Back-end Java — CLT, PJ ou freelance.</p>
+      <p class="lead-light-en">Open to QA and Java back-end roles — full-time or freelance.</p>
+
+      <div class="contact-actions">
+        <a href="mailto:rafael@example.com" class="btn btn-white-solid">rafael@example.com</a>
+        <a href="https://github.com/Rafaelbrk75" target="_blank" rel="noopener" class="btn btn-white-outline">GitHub</a>
+        <a href="https://linkedin.com/in/" target="_blank" rel="noopener" class="btn btn-white-outline">LinkedIn</a>
+      </div>
+      <a href="cv-rafael-bruno.pdf" download class="btn btn-white-outline btn-block">Baixar currículo (PDF)</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>&copy; 2026 Rafael Bruno · QA &amp; Back-end</span>
+    <span>Projetos carregados via GitHub API</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
